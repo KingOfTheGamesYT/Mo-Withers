@@ -1,0 +1,21 @@
+{
+  "modListVersion": 2,
+  "modList": [{
+    "modid": "mowithers",
+    "name": "Mo' Withers mod",
+    "description": "A mod that expands the number of Wither types in your world from 1 to 45 (and more to come)!",
+    "version": "0.41",
+    "mcversion": "1.8",
+    "url": "",
+    "updateUrl": "",
+    "authorList": [ "Enderman_of_D00M" ],
+    "credits": "Created by Enderman_of_D00M.",
+    "logoFile": "mowitherslogo.png",
+    "screenshots": [],
+    "parent": "",
+    "requiredMods": [ "Forge" ],
+    "dependencies": [],
+    "dependants": [],
+    "useDependencyInformation": true
+  }]
+}
