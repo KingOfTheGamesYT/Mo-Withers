@@ -1,21 +1,18 @@
 package net.minecraft.entity.witherskulls;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.INpc;
 import net.minecraft.entity.boss.IBossDisplayData;
 import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.projectile.EntityWitherSkull;
 import net.minecraft.entity.wither.EntityAvatarWither;
-import net.minecraft.entity.wither.EntityDementedWither;
 import net.minecraft.init.Blocks;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
@@ -61,7 +58,7 @@ public class EntityWitherSkullAvatar
       return f;
   }
   
-  protected void onImpact(MovingObjectPosition movingObject)
+  protected void onImpact(RayTraceResult movingObject)
   {
     if (!this.worldObj.isRemote)
     {

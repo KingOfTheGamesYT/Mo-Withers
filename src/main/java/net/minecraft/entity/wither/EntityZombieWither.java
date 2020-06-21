@@ -4,31 +4,19 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.DataWatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIArrowAttack;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAITasks;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.ai.*;
+import net.minecraft.entity.ai.EntityAIAttackRanged;
 import net.minecraft.entity.boss.IBossDisplayData;
-import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.monster.EntityMob;
@@ -36,10 +24,7 @@ import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.PlayerCapabilities;
 import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.entity.witherskulls.EntityFireSkull;
-import net.minecraft.entity.witherskulls.EntityWitherSkullCreeper;
 import net.minecraft.entity.witherskulls.EntityWitherSkullZombie;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -47,17 +32,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.village.Village;
 import net.minecraft.world.EnumDifficulty;
-import net.minecraft.world.GameRules;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -94,7 +76,7 @@ public class EntityZombieWither
     setSize(0.9F, 3.5F);
     ((PathNavigateGround)getNavigator()).func_179693_d(true);
     this.tasks.addTask(0, new EntityAISwimming(this));
-    this.tasks.addTask(2, new EntityAIArrowAttack(this, 1.0D, 40, 24.0F));
+    this.tasks.addTask(2, new EntityAIAttackRanged(this, 1.0D, 40, 24.0F));
     this.tasks.addTask(5, new EntityAIWander(this, 1.0D));
     this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
     this.tasks.addTask(7, new EntityAILookIdle(this));
@@ -211,7 +193,7 @@ public class EntityZombieWither
               ((EntityZombie)entity11).setAttackTarget((EntityLivingBase) entity);
               if (this.ticksExisted % 20 == 0)
               {
-            	  ((EntityZombie)entity11).tasks.addTask(2, new EntityAIAttackOnCollide((EntityZombie)entity11, 1.0D, false));
+            	  ((EntityZombie)entity11).tasks.addTask(2, new EntityAIAttackMelee((EntityZombie)entity11, 1.0D, false));
             	  ((EntityZombie)entity11).targetTasks.addTask(2, new EntityAINearestAttackableTarget((EntityZombie)entity11, EntityLivingBase.class, 0, false, false, attackEntitySelector));
               }
             }

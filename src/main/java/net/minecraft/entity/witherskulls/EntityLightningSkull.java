@@ -1,23 +1,15 @@
 package net.minecraft.entity.witherskulls;
 
-import java.util.Random;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.DataWatcher;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityFireball;
 import net.minecraft.entity.projectile.EntityWitherSkull;
-import net.minecraft.init.Blocks;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.EnumDifficulty;
-import net.minecraft.world.Explosion;
-import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -49,7 +41,7 @@ public class EntityLightningSkull
     setSize(0.5F, 0.5F);
   }
   
-  protected void onImpact(MovingObjectPosition movingObject)
+  protected void onImpact(RayTraceResult movingObject)
   {
     if (!this.worldObj.isRemote)
     {

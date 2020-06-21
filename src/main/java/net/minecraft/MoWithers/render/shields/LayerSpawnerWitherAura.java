@@ -2,14 +2,11 @@ package net.minecraft.MoWithers.render.shields;
 
 import net.minecraft.MoWithers.models.ModelSpawnerWither;
 import net.minecraft.MoWithers.render.RenderSpawnerWither;
-import net.minecraft.client.model.ModelWither;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RenderWither;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.wither.EntitySpawnerWither;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

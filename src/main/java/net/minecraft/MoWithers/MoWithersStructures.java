@@ -3,17 +3,10 @@ package net.minecraft.MoWithers;
 import java.util.Random;
 
 import net.minecraft.MoWithers.worldgen.*;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.world.ChunkCoordIntPair;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenerator;
-import net.minecraft.world.gen.structure.MapGenStructure;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
 public class MoWithersStructures implements IWorldGenerator

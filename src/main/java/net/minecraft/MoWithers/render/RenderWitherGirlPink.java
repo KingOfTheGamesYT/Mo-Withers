@@ -1,6 +1,5 @@
 package net.minecraft.MoWithers.render;
 
-import net.minecraft.MoWithers.models.ModelWitherGirl;
 import net.minecraft.MoWithers.models.ModelWitherGirlPink;
 import net.minecraft.MoWithers.render.shields.LayerWitherGirlPinkAura;
 import net.minecraft.MoWithers.render.shields.LayerWitherGirlPinkEyes;
@@ -17,10 +16,9 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.BossStatus;
 import net.minecraft.entity.monster.EntityIronGolem;
-import net.minecraft.entity.wither.EntityWitherGirl;
 import net.minecraft.entity.wither.EntityWitherGirlPink;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

@@ -3,43 +3,39 @@ package net.minecraft.entity.wither;
 import com.google.common.base.Predicate;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCocoa;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.BlockMushroom;
-import net.minecraft.block.BlockMycelium;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.block.BlockStem;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.DataWatcher;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializer;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIArrowAttack;
+import net.minecraft.entity.ai.EntityAIAttackRanged;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.boss.EntityWither;
-import net.minecraft.entity.boss.IBossDisplayData;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityGolem;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.entity.player.PlayerCapabilities;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.witherskulls.EntityPinkSkull;
 import net.minecraft.init.Blocks;
@@ -49,12 +45,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.stats.AchievementList;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MathHelper;
-import net.minecraft.world.GameRules;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -63,7 +57,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityPinkWither
   extends EntityGolem
-  implements IBossDisplayData, IRangedAttackMob
+  implements IRangedAttackMob
 {
   private float[] field_82220_d = new float[2];
   private float[] field_82221_e = new float[2];
@@ -96,7 +90,7 @@ public class EntityPinkWither
     }, 2.0F, 1.0D, 1.0D));
     
     this.tasks.addTask(5, new EntityAIWander(this, 1.0D));
-    this.tasks.addTask(2, new EntityAIArrowAttack(this, 1.0D, 40, 64.0F));
+    this.tasks.addTask(2, new EntityAIAttackRanged(this, 1.0D, 40, 64.0F));
     this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
     this.tasks.addTask(3, new EntityAITempt(this, 1.0D, Items.sugar, false));
     this.tasks.addTask(1, new EntityAIPanic(this, 1.0D));

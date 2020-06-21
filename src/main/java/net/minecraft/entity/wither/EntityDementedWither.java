@@ -4,29 +4,24 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.command.IEntitySelector;
-import net.minecraft.entity.DataWatcher;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializer;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIArrowAttack;
+import net.minecraft.entity.ai.EntityAIAttackRanged;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
-import net.minecraft.entity.boss.IBossDisplayData;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.PlayerCapabilities;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.witherskulls.EntityWitherSkullSaint;
 import net.minecraft.init.Blocks;
@@ -34,13 +29,11 @@ import net.minecraft.init.Items;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumDifficulty;
-import net.minecraft.world.GameRules;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -48,7 +41,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityDementedWither
   extends EntityMob
-  implements IBossDisplayData, IRangedAttackMob
+  implements IRangedAttackMob
 {
   private float[] field_82220_d = new float[4];
   private float[] field_82221_e = new float[4];
@@ -77,7 +70,7 @@ public class EntityDementedWither
     setSize(1.0F, 4.85F);
     this.isImmuneToFire = true;
     ((PathNavigateGround)getNavigator()).func_179693_d(true);
-    this.tasks.addTask(2, new EntityAIArrowAttack(this, 1.0D, 20, 32.0F));
+    this.tasks.addTask(2, new EntityAIAttackRanged(this, 1.0D, 20, 32.0F));
     this.tasks.addTask(5, new EntityAIWander(this, 1.0D));
     this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
     this.tasks.addTask(7, new EntityAILookIdle(this));

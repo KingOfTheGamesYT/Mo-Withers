@@ -1,31 +1,25 @@
 package net.minecraft.entity.witherskulls;
 
 import java.util.List;
-import net.minecraft.block.state.IBlockState;
+
 import net.minecraft.entity.DataWatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.boss.EntityDragon;
-import net.minecraft.entity.boss.EntityDragonPart;
 import net.minecraft.entity.projectile.EntityFireball;
-import net.minecraft.entity.projectile.EntityWitherSkull;
 import net.minecraft.entity.wither.EntityAirWither;
 import net.minecraft.entity.wither.EntityFriendlyWither;
 import net.minecraft.entity.wither.EntityWitherGirl;
 import net.minecraft.entity.wither.EntityWitherGirlPink;
 import net.minecraft.entity.wither.EntityWitherGirlVoid;
-import net.minecraft.init.Blocks;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.EnumDifficulty;
-import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -57,7 +51,7 @@ public class EntityHurricaneSkull
       return 0.95F;
   }
   
-  protected void onImpact(MovingObjectPosition movingObject)
+  protected void onImpact(RayTraceResult movingObject)
   {
     if (!this.worldObj.isRemote) {
       if (movingObject.entityHit != null)
@@ -115,13 +109,13 @@ public class EntityHurricaneSkull
   {
     onEntityUpdate();
     
-    Vec3 vec3 = new Vec3(this.posX, this.posY, this.posZ);
-    Vec3 vec31 = new Vec3(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
-    MovingObjectPosition movingobjectposition = this.worldObj.rayTraceBlocks(vec3, vec31);
-    vec3 = new Vec3(this.posX, this.posY, this.posZ);
-    vec31 = new Vec3(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
+    Vec3d vec3 = new Vec3d(this.posX, this.posY, this.posZ);
+    Vec3d vec31 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
+    RayTraceResult movingobjectposition = this.worldObj.rayTraceBlocks(vec3, vec31);
+    vec3 = new Vec3d(this.posX, this.posY, this.posZ);
+    vec31 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
     if (movingobjectposition != null) {
-      vec31 = new Vec3(movingobjectposition.hitVec.xCoord, movingobjectposition.hitVec.yCoord, movingobjectposition.hitVec.zCoord);
+      vec31 = new Vec3d(movingobjectposition.hitVec.xCoord, movingobjectposition.hitVec.yCoord, movingobjectposition.hitVec.zCoord);
     }
     Entity entity = null;
     List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
@@ -133,7 +127,7 @@ public class EntityHurricaneSkull
       {
         float f = 0.3F;
         AxisAlignedBB axisalignedbb = entity1.getEntityBoundingBox().expand(f, f, f);
-        MovingObjectPosition movingobjectposition1 = axisalignedbb.calculateIntercept(vec3, vec31);
+        RayTraceResult movingobjectposition1 = axisalignedbb.calculateIntercept(vec3, vec31);
         if (movingobjectposition1 != null)
         {
           double d1 = vec3.distanceTo(movingobjectposition1.hitVec);
@@ -146,7 +140,7 @@ public class EntityHurricaneSkull
       }
     }
     if (entity != null) {
-      movingobjectposition = new MovingObjectPosition(entity);
+      movingobjectposition = new RayTraceResult(entity);
     }
     if (movingobjectposition != null) {
       onImpact(movingobjectposition);

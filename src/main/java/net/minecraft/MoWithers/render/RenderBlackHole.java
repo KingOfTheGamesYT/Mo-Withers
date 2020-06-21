@@ -1,24 +1,18 @@
 package net.minecraft.MoWithers.render;
 
+import net.minecraft.client.renderer.VertexBuffer;
 import org.lwjgl.util.glu.Sphere;
 
 import net.minecraft.MoWithers.MoWitherItems;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelSkeletonHead;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.renderer.tileentity.RenderWitherSkull;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.projectile.EntityFireball;
-import net.minecraft.entity.projectile.EntityWitherSkull;
-import net.minecraft.entity.witherskulls.EntityVoidSkull;
 import net.minecraft.entity.witherskulls.EntityBlackHole;
-import net.minecraft.init.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -50,7 +44,7 @@ public class RenderBlackHole extends Render
         GlStateManager.scale(8.0F, 8.0F, 8.0F);
         TextureAtlasSprite textureatlassprite = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getParticleIcon(MoWitherItems.blackHole);
         Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+        VertexBuffer worldrenderer = tessellator.getWorldRenderer();
         float f3 = textureatlassprite.getMinU();
         float f4 = textureatlassprite.getMaxU();
         float f5 = textureatlassprite.getMinV();

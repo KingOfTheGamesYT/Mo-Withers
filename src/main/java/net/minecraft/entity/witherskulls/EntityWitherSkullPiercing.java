@@ -1,8 +1,6 @@
 package net.minecraft.entity.witherskulls;
 
-import java.util.Random;
 import net.minecraft.MoWithers.DamageSourceExtra;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.passive.EntityVillager;
@@ -12,12 +10,10 @@ import net.minecraft.entity.wither.EntityWitherGirl;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityWitherSkullPiercing
   extends EntityWitherSkull
@@ -40,14 +36,14 @@ public class EntityWitherSkullPiercing
       this.setSize(0.5F, 0.5F);
       this.setLocationAndAngles(x, y, z, this.rotationYaw, this.rotationPitch);
       this.setPosition(x, y, z);
-      double d6 = (double)MathHelper.sqrt_double(accelX * accelX + accelY * accelY + accelZ * accelZ);
+      double d6 = (double) MathHelper.sqrt_double(accelX * accelX + accelY * accelY + accelZ * accelZ);
       this.accelerationX = accelX / d6 * 0.1D;
       this.accelerationY = accelY / d6 * 0.1D;
       this.accelerationZ = accelZ / d6 * 0.1D;
       setSize(0.5F, 0.5F);
   }
   
-  protected void onImpact(MovingObjectPosition movingObject)
+  protected void onImpact(RayTraceResult movingObject)
   {
     if (!this.worldObj.isRemote)
     {

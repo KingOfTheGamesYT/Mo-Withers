@@ -1,18 +1,16 @@
 package net.minecraft.MoWithers.render.shields;
 
-import java.util.List;
 import java.util.Random;
-import net.minecraft.client.model.ModelBase;
+
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.entity.RendererLivingEntity;
+import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -20,9 +18,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class LayerArrowSmaller
   implements LayerRenderer
 {
-  private final RendererLivingEntity field_177168_a;
+  private final RenderLivingBase field_177168_a;
   
-  public LayerArrowSmaller(RendererLivingEntity p_i46124_1_)
+  public LayerArrowSmaller(RenderLivingBase p_i46124_1_)
   {
     this.field_177168_a = p_i46124_1_;
   }

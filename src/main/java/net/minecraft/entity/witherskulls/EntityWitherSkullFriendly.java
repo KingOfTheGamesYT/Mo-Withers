@@ -1,8 +1,6 @@
 package net.minecraft.entity.witherskulls;
 
-import java.util.Random;
 import net.minecraft.MoWithers.DamageSourceExtra;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.passive.EntityVillager;
@@ -11,7 +9,7 @@ import net.minecraft.entity.projectile.EntityWitherSkull;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -39,7 +37,7 @@ public class EntityWitherSkullFriendly
     setSize(0.5F, 0.5F);
   }
   
-  protected void onImpact(MovingObjectPosition movingObject)
+  protected void onImpact(RayTraceResult movingObject)
   {
     if (!this.worldObj.isRemote)
     {

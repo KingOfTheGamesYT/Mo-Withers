@@ -2,18 +2,14 @@ package net.minecraft.MoWithers.render.shields;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.MoWithers.render.RenderSpawnerWither;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.*;
 import net.minecraft.entity.wither.*;
 import net.minecraft.entity.boss.*;
-import net.minecraft.entity.monster.*;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.MobSpawnerBaseLogic;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

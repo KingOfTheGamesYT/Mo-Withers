@@ -2,15 +2,16 @@ package net.minecraft.entity.wither;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import net.minecraft.command.IEntitySelector;
+import net.minecraft.command.EntitySelector;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAITarget;
 import net.minecraft.entity.player.EntityPlayer;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class EntityAINearestWitherAttackTarget extends EntityAITarget
 {
@@ -101,7 +102,7 @@ public class EntityAINearestWitherAttackTarget extends EntityAITarget
         else
         {
             double d0 = this.getTargetDistance();
-            List list = this.taskOwner.worldObj.getEntitiesWithinAABB(this.targetClass, this.taskOwner.getEntityBoundingBox().expand(d0, d0, d0), Predicates.and(this.targetEntitySelector, IEntitySelector.NOT_SPECTATING));
+            List list = this.taskOwner.worldObj.getEntitiesWithinAABB(this.targetClass, this.taskOwner.getEntityBoundingBox().expand(d0, d0, d0), Predicates.and(this.targetEntitySelector, EntitySelector.NOT_SPECTATING));
             Collections.sort(list, this.theNearestAttackableTargetSorter);
 
             if (list.isEmpty())

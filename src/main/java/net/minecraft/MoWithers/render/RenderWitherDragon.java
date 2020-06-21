@@ -2,7 +2,6 @@ package net.minecraft.MoWithers.render;
 
 import net.minecraft.MoWithers.models.ModelWitherDragon;
 import net.minecraft.MoWithers.render.shields.LayerWitherDragonAura;
-import net.minecraft.client.model.ModelDragon;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -10,9 +9,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.BossStatus;
-import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.wither.EntityWitherDragon;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

@@ -15,8 +15,8 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.stats.StatList;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class ItemWitherSword extends ItemSword 
@@ -48,7 +48,7 @@ public class ItemWitherSword extends ItemSword
 		  playerIn.swingItem();
 	      double d1 = 1.5D;
 	      double d22 = 64D;
-	      Vec3 vec3 = playerIn.getLook(1.0F);
+	      Vec3d vec3 = playerIn.getLook(1.0F);
 	      double d2 = (playerIn.posX + vec3.xCoord * d22) - (playerIn.posX + vec3.xCoord * d1);
 	      double d3 = (playerIn.posY + vec3.yCoord * d22) - (playerIn.posY + vec3.xCoord * d1);
 	      double d4 = (playerIn.posZ + vec3.zCoord * d22) - (playerIn.posZ + vec3.zCoord * d1);

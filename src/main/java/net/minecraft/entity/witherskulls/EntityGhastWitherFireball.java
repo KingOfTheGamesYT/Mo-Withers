@@ -4,14 +4,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.projectile.EntityLargeFireball;
-import net.minecraft.entity.wither.EntityGhastWither;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityGhastWitherFireball extends EntityLargeFireball
 {
@@ -39,7 +35,7 @@ public class EntityGhastWitherFireball extends EntityLargeFireball
     /**
      * Called when this EntityFireball hits a block or entity.
      */
-    protected void onImpact(MovingObjectPosition movingObject)
+    protected void onImpact(RayTraceResult movingObject)
     {
         if (!this.worldObj.isRemote)
         {

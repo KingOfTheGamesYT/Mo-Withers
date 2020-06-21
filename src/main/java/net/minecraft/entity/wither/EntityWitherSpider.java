@@ -12,22 +12,11 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-import net.minecraft.entity.ai.EntityAIAvoidEntity;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILeapAtTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.boss.EntityWither;
+import net.minecraft.entity.ai.*;
+import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.item.EntityArmorStand;
-import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.entity.passive.EntityOcelot;
-import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityWitherSkull;
 import net.minecraft.init.Items;
@@ -37,12 +26,11 @@ import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.pathfinding.PathNavigateClimber;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -71,7 +59,7 @@ public class EntityWitherSpider extends EntityMob
         this.experienceValue = 10;
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(0, new EntityAIAvoidEntity(this, attackEntitySelector, 3.0F, 1.0D, 2.0D));
-        this.tasks.addTask(4, new EntityAIAttackOnCollide(this, 1.0D, true));
+        this.tasks.addTask(4, new EntityAIAttackMelee(this, 1.0D, true));
         this.tasks.addTask(5, new EntityAIWander(this, 0.8D));
         this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(6, new EntityAILookIdle(this));
@@ -121,7 +109,7 @@ public class EntityWitherSpider extends EntityMob
     	{
     		((EntitySkeleton)this.riddenByEntity).faceEntity(this.getAttackTarget(), 10F, 30F);
     		((EntitySkeleton)this.riddenByEntity).setAttackTarget(this.getAttackTarget());
-    		((EntitySkeleton)this.riddenByEntity).tasks.addTask(0, new EntityAIAttackOnCollide((EntitySkeleton)this.riddenByEntity, 1.2D, false));
+    		((EntitySkeleton)this.riddenByEntity).tasks.addTask(0, new EntityAIAttackMelee((EntitySkeleton)this.riddenByEntity, 1.2D, false));
     	}
     	
         if (this.worldObj.isRemote)
@@ -371,7 +359,7 @@ public class EntityWitherSpider extends EntityMob
     	entitylivingbase.hurtResistantTime = 0;
     	this.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1014, new BlockPos(this), 0);
         double d1 = 1.5D;
-        Vec3 vec3 = this.getLook(1.0F);
+        Vec3d vec3 = this.getLook(1.0F);
         double d2 = entitylivingbase.posX - (this.posX + vec3.xCoord * d1);
         double d3 = (entitylivingbase.posY + 0.3D) - (this.posY + 0.6D);
         double d4 = entitylivingbase.posZ - (this.posZ + vec3.zCoord * d1);

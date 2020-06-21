@@ -2,42 +2,22 @@ package net.minecraft.entity.witherskulls;
 
 import java.util.List;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockLiquid;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.boss.EntityDragon;
-import net.minecraft.entity.boss.EntityDragonPart;
 import net.minecraft.entity.boss.IBossDisplayData;
 import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.item.EntityBoat;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.item.EntityMinecart;
-import net.minecraft.entity.item.EntityTNTPrimed;
-import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.entity.projectile.EntityFishHook;
-import net.minecraft.entity.wither.EntityAirWither;
-import net.minecraft.entity.wither.EntityFriendlyWither;
-import net.minecraft.entity.wither.EntityWitherGirl;
-import net.minecraft.entity.wither.EntityWitherGirlPink;
-import net.minecraft.entity.wither.EntityWitherGirlVoid;
-import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3;
-import net.minecraft.world.EnumDifficulty;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.fml.relauncher.Side;
@@ -182,15 +162,15 @@ public class EntityMiniHurricane extends Entity
             if (!this.isAboveOcean() && this.ticksInAir > 600 && !this.worldObj.isRemote)
             	this.setDead();
 
-            Vec3 vec3 = new Vec3(this.posX, this.posY + 2D, this.posZ);
-            Vec3 vec31 = new Vec3(this.posX + this.motionX, this.posY + 2D + this.motionY, this.posZ + this.motionZ);
-            MovingObjectPosition movingobjectposition = this.worldObj.rayTraceBlocks(vec3, vec31);
-            vec3 = new Vec3(this.posX, this.posY + 2D, this.posZ);
-            vec31 = new Vec3(this.posX + this.motionX, this.posY + 2D + this.motionY, this.posZ + this.motionZ);
+            Vec3d vec3 = new Vec3d(this.posX, this.posY + 2D, this.posZ);
+            Vec3d vec31 = new Vec3d(this.posX + this.motionX, this.posY + 2D + this.motionY, this.posZ + this.motionZ);
+            RayTraceResult movingobjectposition = this.worldObj.rayTraceBlocks(vec3, vec31);
+            vec3 = new Vec3d(this.posX, this.posY + 2D, this.posZ);
+            vec31 = new Vec3d(this.posX + this.motionX, this.posY + 2D + this.motionY, this.posZ + this.motionZ);
 
             if (movingobjectposition != null)
             {
-                vec31 = new Vec3(movingobjectposition.hitVec.xCoord, movingobjectposition.hitVec.yCoord, movingobjectposition.hitVec.zCoord);
+                vec31 = new Vec3d(movingobjectposition.hitVec.xCoord, movingobjectposition.hitVec.yCoord, movingobjectposition.hitVec.zCoord);
             }
             
             if (this.shootingEntity == null || movingobjectposition != null || (this.shootingEntity != null && this.getDistanceSqToEntity(this.shootingEntity) > 14400D))

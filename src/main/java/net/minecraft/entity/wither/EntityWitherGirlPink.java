@@ -4,26 +4,25 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 import net.minecraft.MoWithers.DamageSourceExtra;
 import net.minecraft.MoWithers.MoWithersAchievments;
 import net.minecraft.block.Block;
-import net.minecraft.block.Block.SoundType;
+
 import net.minecraft.block.BlockCocoa;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.BlockMushroom;
-import net.minecraft.block.BlockMycelium;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.block.BlockStem;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.command.IEntitySelector;
-import net.minecraft.entity.DataWatcher;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializer;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityList;
@@ -32,25 +31,11 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.INpc;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-import net.minecraft.entity.ai.EntityAIAvoidEntity;
-import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.entity.ai.EntityAIBreakDoor;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
-import net.minecraft.entity.ai.EntityAIOpenDoor;
-import net.minecraft.entity.ai.EntityAIPanic;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAITasks;
-import net.minecraft.entity.ai.EntityAITempt;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.ai.EntityAIWatchClosest2;
-import net.minecraft.entity.ai.RandomPositionGenerator;
+import net.minecraft.entity.ai.*;
+import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.BaseAttributeMap;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
-import net.minecraft.entity.boss.IBossDisplayData;
+
 import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityMinecart;
@@ -61,8 +46,6 @@ import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.entity.player.PlayerCapabilities;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.witherskulls.EntityPinkSkull;
 import net.minecraft.init.Blocks;
@@ -75,17 +58,13 @@ import net.minecraft.pathfinding.PathNavigateSwimmer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.stats.AchievementList;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.village.Village;
-import net.minecraft.village.VillageCollection;
-import net.minecraft.world.EnumDifficulty;
-import net.minecraft.world.GameRules;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -94,7 +73,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityWitherGirlPink
   extends EntityGolem
-  implements IBossDisplayData, IRangedAttackMob, INpc
+  implements IRangedAttackMob, INpc
 {
 	
     private static final UUID field_110189_bq = UUID.fromString("49455A49-7EC5-45BA-B886-3B90B23A1718");
@@ -133,7 +112,7 @@ public class EntityWitherGirlPink
     setHealth(getMaxHealth());
     this.isImmuneToFire = true;
     this.ignoreFrustumCheck = true;
-    ((PathNavigateGround)getNavigator()).func_179693_d(true);
+    //((PathNavigateGround)getNavigator()).func_179693_d(true);
     this.tasks.addTask(0, new EntityAIAvoidEntity(this, new Predicate()
     {
       public boolean func_179958_a(Entity p_179958_1_)
@@ -151,7 +130,7 @@ public class EntityWitherGirlPink
     this.tasks.addTask(1, new EntityAIBreakDoor(this));
     this.tasks.addTask(1, new EntityAITempt(this, 1.0D, Items.sugar, false));
     this.tasks.addTask(1, new EntityAITempt(this, 1.0D, Items.golden_apple, false));
-    this.tasks.addTask(2, new EntityAIAttackOnCollide(this, 0.6D, true));
+    this.tasks.addTask(2, new EntityAIAttackMelee(this, 0.6D, true));
     this.tasks.addTask(2, new EntityAIPanic(this, 1.1D));
     this.tasks.addTask(5, new EntityAIWander(this, 0.6D));
     this.tasks.addTask(5, new EntityAIWatchClosest2(this, EntityIronGolem.class, 6.0F, 0.1F));
@@ -1381,7 +1360,7 @@ public class EntityWitherGirlPink
           this.isConcerned = true;
           entity.attackEntityFrom(DamageSourceExtra.causeWitherGirlDamage(this), (int)getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue());
           double d1 = 32.0D;
-          Vec3 vec3 = ((EntityPlayer)entity1).getLook(1.0F);
+          Vec3d vec3 = ((EntityPlayer)entity1).getLook(1.0F);
       	this.getNavigator().setPath(this.getNavigator().getPathToXYZ(entity1.posX + vec3.xCoord * d1, entity1.posY, entity1.posZ + vec3.zCoord * d1), 1.1D);
           List list111 = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, getEntityBoundingBox().expand(32.0D, 32.0D, 32.0D));
           if ((list111 != null) && (!list111.isEmpty())) {
