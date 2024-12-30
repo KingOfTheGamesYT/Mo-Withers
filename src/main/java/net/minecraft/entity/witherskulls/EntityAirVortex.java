@@ -1,6 +1,7 @@
 package net.minecraft.entity.witherskulls;
 
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -120,7 +121,7 @@ public class EntityAirVortex extends Entity
         	        		else
         	        			entity.attackEntityFrom(DamageSource.causeIndirectMagicDamage((EntityPlayer)this.shootingEntity, this), 2F);
         	        	else
-        	        		entity.attackEntityFrom(DamageSource.setExplosionSource(null), 2F);
+        	        		entity.attackEntityFrom(DamageSource.causeExplosionDamage(null), 2F);
 	                }
     	        }
     	      }
@@ -210,7 +211,7 @@ public class EntityAirVortex extends Entity
         	        		else
         	        			entity1.attackEntityFrom(DamageSource.causeIndirectMagicDamage((EntityPlayer)this.shootingEntity, this), 10F);
         	        	else
-        	        		entity1.attackEntityFrom(DamageSource.setExplosionSource(null), 10F);
+        	        		entity1.attackEntityFrom(DamageSource.causeExplosionDamage(null), 10F);
         	        }
         	      }
         	    }
@@ -320,9 +321,9 @@ public class EntityAirVortex extends Entity
         if (tagCompund.hasKey("direction", 9))
         {
             NBTTagList nbttaglist = tagCompund.getTagList("direction", 6);
-            this.motionX = nbttaglist.getDouble(0);
-            this.motionY = nbttaglist.getDouble(1);
-            this.motionZ = nbttaglist.getDouble(2);
+            this.motionX = nbttaglist.getDoubleAt(0);
+            this.motionY = nbttaglist.getDoubleAt(1);
+            this.motionZ = nbttaglist.getDoubleAt(2);
         }
         else
         {

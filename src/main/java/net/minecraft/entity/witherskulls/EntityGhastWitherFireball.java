@@ -42,10 +42,10 @@ public class EntityGhastWitherFireball extends EntityLargeFireball
             if (movingObject.entityHit != null && this.shootingEntity != null && !(movingObject.entityHit instanceof EntityGhast))
             {
                 movingObject.entityHit.attackEntityFrom(DamageSource.causeFireballDamage(this, this.shootingEntity), 17.0F);
-                this.func_174815_a(this.shootingEntity, movingObject.entityHit);
+                this.applyEnchantments(this.shootingEntity, movingObject.entityHit);
             }
 
-            boolean flag = this.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing");
+            boolean flag = this.worldObj.getGameRules().getBoolean("mobGriefing");
             this.worldObj.newExplosion((Entity)null, this.posX, this.posY, this.posZ, (float)this.explosionPower, flag, flag);
             this.setDead();
         }

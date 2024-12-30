@@ -1,6 +1,7 @@
 package net.minecraft.entity.witherskulls;
 
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -18,6 +19,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -256,13 +258,13 @@ public class EntityFireStream extends Entity
     	        			movingObject.entityHit.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer)this.shootingEntity), 10.0F);
     	        		else
     	        			movingObject.entityHit.attackEntityFrom(DamageSource.causeIndirectMagicDamage((EntityPlayer)this.shootingEntity, this), 10.0F);
-                		this.func_174815_a(this.shootingEntity, movingObject.entityHit);
+                		this.applyEnchantments(this.shootingEntity, movingObject.entityHit);
                 	}
                 }
                 else
                 {
                 	if (!movingObject.entityHit.isImmuneToFire())
-                    movingObject.entityHit.attackEntityFrom(DamageSource.setExplosionSource(null), 10.0F);
+                    movingObject.entityHit.attackEntityFrom(DamageSource.causeExplosionDamage(null), 10.0F);
                 }
             }
             
@@ -276,7 +278,7 @@ public class EntityFireStream extends Entity
     	        	if (this.shootingEntity != null)
     	        		entity1.attackEntityFrom(DamageSource.causeIndirectMagicDamage((EntityPlayer)this.shootingEntity, this), 6F);
     	        	else
-    	        		entity1.attackEntityFrom(DamageSource.setExplosionSource(null), 6F);
+    	        		entity1.attackEntityFrom(DamageSource.causeExplosionDamage(null), 6F);
     	        }
     	      }
     	    }
@@ -324,9 +326,9 @@ public class EntityFireStream extends Entity
         if (tagCompund.hasKey("direction", 9))
         {
             NBTTagList nbttaglist = tagCompund.getTagList("direction", 6);
-            this.motionX = nbttaglist.getDouble(0);
-            this.motionY = nbttaglist.getDouble(1);
-            this.motionZ = nbttaglist.getDouble(2);
+            this.motionX = nbttaglist.getDoubleAt(0);
+            this.motionY = nbttaglist.getDoubleAt(1);
+            this.motionZ = nbttaglist.getDoubleAt(2);
         }
         else
         {

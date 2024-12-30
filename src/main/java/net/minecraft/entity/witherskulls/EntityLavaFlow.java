@@ -112,7 +112,7 @@ public class EntityLavaFlow extends Entity
     	        		else
     	        			entity1.attackEntityFrom(DamageSource.causeIndirectMagicDamage((EntityPlayer)this.shootingEntity, this), 10F);
     	        	else
-    	        		entity1.attackEntityFrom(DamageSource.setExplosionSource(null), 10F);
+    	        		entity1.attackEntityFrom(DamageSource.causeExplosionDamage(null), 10F);
     	        }
     	      }
     	    }
@@ -275,12 +275,12 @@ public class EntityLavaFlow extends Entity
                 	{
                 		movingObject.entityHit.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer)this.shootingEntity), 60.0F);
                 		movingObject.entityHit.motionY += 1F;
-                		this.func_174815_a(this.shootingEntity, movingObject.entityHit);
+                		this.applyEnchantments(this.shootingEntity, movingObject.entityHit);
                 	}
                 	else
                 	{
                 		movingObject.entityHit.attackEntityFrom(DamageSource.causeIndirectMagicDamage((EntityPlayer)this.shootingEntity, this), 20.0F);
-                		this.func_174815_a(this.shootingEntity, movingObject.entityHit);
+                		this.applyEnchantments(this.shootingEntity, movingObject.entityHit);
                 	}
                 }
                 else
@@ -299,7 +299,7 @@ public class EntityLavaFlow extends Entity
     	        	if (this.shootingEntity != null)
     	        		entity1.attackEntityFrom(DamageSource.causeIndirectMagicDamage((EntityPlayer)this.shootingEntity, this), 12F);
     	        	else
-    	        		entity1.attackEntityFrom(DamageSource.setExplosionSource(null), 12F);
+    	        		entity1.attackEntityFrom(DamageSource.causeExplosionDamage(null), 12F);
     	        }
     	      }
     	    }
@@ -347,9 +347,9 @@ public class EntityLavaFlow extends Entity
         if (tagCompund.hasKey("direction", 9))
         {
             NBTTagList nbttaglist = tagCompund.getTagList("direction", 6);
-            this.motionX = nbttaglist.getDouble(0);
-            this.motionY = nbttaglist.getDouble(1);
-            this.motionZ = nbttaglist.getDouble(2);
+            this.motionX = nbttaglist.getDoubleAt(0);
+            this.motionY = nbttaglist.getDoubleAt(1);
+            this.motionZ = nbttaglist.getDoubleAt(2);
         }
         else
         {

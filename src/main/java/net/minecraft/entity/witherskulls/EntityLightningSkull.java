@@ -1,16 +1,18 @@
 package net.minecraft.entity.witherskulls;
 
-import net.minecraft.entity.DataWatcher;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityWitherSkull;
+import net.minecraft.init.MobEffects;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
+
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -53,13 +55,13 @@ public class EntityLightningSkull
           {
             movingObject.entityHit.setFire(25);
             
-            this.worldObj.addWeatherEffect(new EntityLightningBolt(this.worldObj, movingObject.entityHit.posX, movingObject.entityHit.posY, movingObject.entityHit.posZ));
+            this.worldObj.addWeatherEffect(new EntityLightningBolt(this.worldObj, movingObject.entityHit.posX, movingObject.entityHit.posY, movingObject.entityHit.posZ, false));
             
             movingObject.entityHit.attackEntityFrom(DamageSource.lightningBolt, 11.0F + (rand.nextFloat() * 19F));
             if (!movingObject.entityHit.isEntityAlive()) {
               this.shootingEntity.heal(5.0F);
             } else {
-              func_174815_a(this.shootingEntity, movingObject.entityHit);
+              applyEnchantments(this.shootingEntity, movingObject.entityHit);
             }
           }
         }
@@ -74,9 +76,9 @@ public class EntityLightningSkull
             b0 = 15;
             for (int l1 = 0; l1 <= 2; l1++)
             {
-              this.worldObj.playSoundEffect(this.posX + (this.rand.nextDouble() - 0.5D) * this.width * 3.0D, this.posY + (this.rand.nextDouble() - 0.5D) * this.width * 3.0D, this.posZ + (this.rand.nextDouble() - 0.5D) * this.width * 3.0D, "random.explode", 2.0F, 0.7F + this.rand.nextFloat() * 0.2F);
+              this.playSound(SoundEvents.entity_generic_explode, 2.0F, 0.7F + this.rand.nextFloat() * 0.2F);
               movingObject.entityHit.hurtResistantTime = 1;
-              this.worldObj.addWeatherEffect(new EntityLightningBolt(this.worldObj, movingObject.entityHit.posX, movingObject.entityHit.posY, movingObject.entityHit.posZ));
+              this.worldObj.addWeatherEffect(new EntityLightningBolt(this.worldObj, movingObject.entityHit.posX, movingObject.entityHit.posY, movingObject.entityHit.posZ, false));
             }
           }
           else if (this.worldObj.getDifficulty() == EnumDifficulty.HARD)
@@ -84,36 +86,36 @@ public class EntityLightningSkull
             b0 = 40;
             for (int l1 = 0; l1 <= 4; l1++)
             {
-              this.worldObj.playSoundEffect(this.posX + (this.rand.nextDouble() - 0.5D) * this.width * 3.0D, this.posY + (this.rand.nextDouble() - 0.5D) * this.width * 3.0D, this.posZ + (this.rand.nextDouble() - 0.5D) * this.width * 3.0D, "random.explode", 2.0F, 0.7F + this.rand.nextFloat() * 0.2F);
+              this.playSound(SoundEvents.entity_generic_explode, 2.0F, 0.7F + this.rand.nextFloat() * 0.2F);
               movingObject.entityHit.hurtResistantTime = 1;
-              this.worldObj.addWeatherEffect(new EntityLightningBolt(this.worldObj, movingObject.entityHit.posX, movingObject.entityHit.posY, movingObject.entityHit.posZ));
+              this.worldObj.addWeatherEffect(new EntityLightningBolt(this.worldObj, movingObject.entityHit.posX, movingObject.entityHit.posY, movingObject.entityHit.posZ, false));
             }
           }
           if (b0 > 0)
           {
             ((EntityLivingBase)movingObject.entityHit).motionY = (0.75F * this.worldObj.getDifficulty().getDifficultyId());
             
-            ((EntityLivingBase)movingObject.entityHit).addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 20 * b0, 0));
-            ((EntityLivingBase)movingObject.entityHit).addPotionEffect(new PotionEffect(Potion.confusion.id, 20 * b0, 0));
-            ((EntityLivingBase)movingObject.entityHit).addPotionEffect(new PotionEffect(Potion.wither.id, 20 * b0, 1));
+            ((EntityLivingBase)movingObject.entityHit).addPotionEffect(new PotionEffect(MobEffects.digSlowdown, 20 * b0, 0));
+            ((EntityLivingBase)movingObject.entityHit).addPotionEffect(new PotionEffect(MobEffects.confusion, 20 * b0, 0));
+            ((EntityLivingBase)movingObject.entityHit).addPotionEffect(new PotionEffect(MobEffects.wither, 20 * b0, 1));
             if (this.worldObj.getDifficulty() == EnumDifficulty.HARD) {
-              ((EntityLivingBase)movingObject.entityHit).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 20 * b0, 0));
+              ((EntityLivingBase)movingObject.entityHit).addPotionEffect(new PotionEffect(MobEffects.moveSlowdown, 20 * b0, 0));
             }
           }
         }
       }
-      this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "random.explode", 2.0F, 0.7F + this.rand.nextFloat() * 0.2F);
+      this.playSound(SoundEvents.entity_generic_explode, 2.0F, 0.7F + this.rand.nextFloat() * 0.2F);
       if (this.worldObj.getClosestPlayerToEntity(this, 6D) != null)
       {
     	  EntityPlayer player = this.worldObj.getClosestPlayerToEntity(this, 6D);
     	  player.attackEntityFrom(DamageSource.outOfWorld, 1F);
-          this.worldObj.addWeatherEffect(new EntityLightningBolt(this.worldObj, player.posX, player.posY, player.posZ));
+          this.worldObj.addWeatherEffect(new EntityLightningBolt(this.worldObj, player.posX, player.posY, player.posZ, false));
       }
       else
       {
-          this.worldObj.addWeatherEffect(new EntityLightningBolt(this.worldObj, this.posX, this.posY, this.posZ));
+          this.worldObj.addWeatherEffect(new EntityLightningBolt(this.worldObj, this.posX, this.posY, this.posZ, false));
       }
-      this.worldObj.newExplosion(this, this.posX, this.posY, this.posZ, 2.0F, true, this.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing"));
+      this.worldObj.newExplosion(this, this.posX, this.posY, this.posZ, 2.0F, true, this.worldObj.getGameRules().getBoolean("mobGriefing"));
       setDead();
     }
   }

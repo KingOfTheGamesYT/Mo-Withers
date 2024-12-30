@@ -1,14 +1,14 @@
 package net.minecraft.entity.witherskulls;
 
-import net.minecraft.entity.DataWatcher;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityWitherSkull;
-import net.minecraft.potion.Potion;
+import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
+
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -55,7 +55,7 @@ public class EntityFireSkull
             if (!movingObject.entityHit.isEntityAlive()) {
               this.shootingEntity.heal(5.0F);
             } else {
-              func_174815_a(this.shootingEntity, movingObject.entityHit);
+              applyEnchantments(this.shootingEntity, movingObject.entityHit);
             }
           }
         }
@@ -71,16 +71,16 @@ public class EntityFireSkull
             b0 = 40;
           }
           if (b0 > 0) {
-            ((EntityLivingBase)movingObject.entityHit).addPotionEffect(new PotionEffect(Potion.wither.id, 20 * b0, 1));
+            ((EntityLivingBase)movingObject.entityHit).addPotionEffect(new PotionEffect(MobEffects.wither, 20 * b0, 1));
           }
         }
       }
       if (this.worldObj.getDifficulty() == EnumDifficulty.NORMAL) {
-        this.worldObj.newExplosion(this, this.posX, this.posY, this.posZ, 1.5F, true, this.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing"));
+        this.worldObj.newExplosion(this, this.posX, this.posY, this.posZ, 1.5F, true, this.worldObj.getGameRules().getBoolean("mobGriefing"));
       } else if (this.worldObj.getDifficulty() == EnumDifficulty.HARD) {
-        this.worldObj.newExplosion(this, this.posX, this.posY, this.posZ, 2.0F, true, this.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing"));
+        this.worldObj.newExplosion(this, this.posX, this.posY, this.posZ, 2.0F, true, this.worldObj.getGameRules().getBoolean("mobGriefing"));
       } else {
-        this.worldObj.newExplosion(this, this.posX, this.posY, this.posZ, 1.0F, true, this.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing"));
+        this.worldObj.newExplosion(this, this.posX, this.posY, this.posZ, 1.0F, true, this.worldObj.getGameRules().getBoolean("mobGriefing"));
       }
       setDead();
     }
