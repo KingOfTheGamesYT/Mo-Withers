@@ -2,7 +2,6 @@ package net.minecraft.entity.witherskulls;
 
 import java.util.List;
 
-import net.minecraft.entity.DataWatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityFireball;
@@ -11,8 +10,10 @@ import net.minecraft.entity.wither.EntityFriendlyWither;
 import net.minecraft.entity.wither.EntityWitherGirl;
 import net.minecraft.entity.wither.EntityWitherGirlPink;
 import net.minecraft.entity.wither.EntityWitherGirlVoid;
-import net.minecraft.potion.Potion;
+import net.minecraft.init.MobEffects;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
@@ -21,11 +22,11 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
+
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityAirSkull
-  extends EntityFireball
+public class EntityAirSkull extends EntityFireball
 {
   public EntityAirSkull(World worldIn)
   {
@@ -58,7 +59,7 @@ public class EntityAirSkull
       {
         if (this.shootingEntity != null)
         {
-          if (movingObject.entityHit.attackEntityFrom(DamageSource.setExplosionSource(null), 10.0F))
+          if (movingObject.entityHit.attackEntityFrom(DamageSource.causeExplosionDamage(null), 10.0F))
           {
             setDead();
             
@@ -71,7 +72,7 @@ public class EntityAirSkull
             if (!movingObject.entityHit.isEntityAlive()) {
               this.shootingEntity.heal(5.0F);
             } else {
-              func_174815_a(this.shootingEntity, movingObject.entityHit);
+              applyEnchantments(this.shootingEntity, movingObject.entityHit);
             }
           }
         }
@@ -88,7 +89,7 @@ public class EntityAirSkull
             b0 = 40;
           }
           if (b0 > 0) {
-            ((EntityLivingBase)movingObject.entityHit).addPotionEffect(new PotionEffect(Potion.wither.id, 20 * b0, 1));
+            ((EntityLivingBase)movingObject.entityHit).addPotionEffect(new PotionEffect(MobEffects.wither, 20 * b0, 1));
           }
         }
       }
@@ -182,7 +183,7 @@ public class EntityAirSkull
     this.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX + (this.rand.nextDouble() * 4D - 2D), this.posY + (this.rand.nextDouble() * 4D - 2D), this.posZ + (this.rand.nextDouble() * 4D - 2D), MathHelper.sin(this.prevRotationYaw * 3.1415927F / 180.0F), -this.motionY * 3.1415927F / 180.0F, -MathHelper.cos(this.prevRotationYaw * 3.1415927F / 180.0F), new int[0]);
     this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY + 0.5D, this.posZ, 0.0D, 0.0D, 0.0D, new int[0]);
     setPosition(this.posX, this.posY, this.posZ);
-    this.playSound("random.explode", 0.2F, 2.0F);
+    this.playSound(SoundEvents.entity_generic_explode, 0.2F, 2.0F);
     this.noClip = true;
     if ((this.motionX * this.motionX + this.motionZ * this.motionZ == 0.0D || this.shootingEntity == null) && (!this.worldObj.isRemote)) {
       setDead();
@@ -197,7 +198,7 @@ public class EntityAirSkull
         Entity entity1 = (Entity)list111.get(i111);
         if ((entity1 != null) && ((entity1 instanceof EntityLivingBase)) && (this.shootingEntity != null) && (entity1 != this.shootingEntity) && (!(entity1 instanceof EntityAirWither)) && (!(entity1 instanceof EntityWitherGirl)) && (!(entity1 instanceof EntityWitherGirlVoid)) && (!(entity1 instanceof EntityFriendlyWither)) && (!(entity1 instanceof EntityWitherGirlPink))) 
         {
-        	entity1.attackEntityFrom(DamageSource.setExplosionSource(null), 1F);
+        	entity1.attackEntityFrom(DamageSource.causeExplosionDamage(null), 1F);
             double d2 = entity1.posX - this.posX;
             double d3 = entity1.posY - this.posY;
             double d4 = entity1.posZ - this.posZ;
