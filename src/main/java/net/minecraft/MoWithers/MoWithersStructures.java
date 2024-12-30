@@ -5,16 +5,18 @@ import java.util.Random;
 import net.minecraft.MoWithers.worldgen.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenerator;
+
 import net.minecraftforge.fml.common.IWorldGenerator;
 
 public class MoWithersStructures implements IWorldGenerator
 {
 	@Override
-	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) 
+	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider)
 	{
-		int dimensionId = world.provider.getDimensionId();
+		int dimensionId = world.provider.getDimension();
 		
 		if (dimensionId == -1) // the Nether
 		{
