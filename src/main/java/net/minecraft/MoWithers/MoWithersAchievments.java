@@ -8,10 +8,10 @@ import net.minecraftforge.common.AchievementPage;
 
 public class MoWithersAchievments 
 {
-	public static Achievement achievementSculpture = new Achievement("achievement.michael", "michael", 0, 0, MoWitherItems.sculpture, (Achievement)null).setIndependent();
+	public static Achievement achievementSculpture = new Achievement("achievement.michael", "michael", 0, 0, MoWitherItems.sculpture, (Achievement)null).initIndependentStat();
 	public static Achievement achievementSpawnMoWither = new Achievement("achievement.buildWither", "buildWither", 2, 1, new ItemStack(Items.skull, 1, 1), achievementSculpture);
-	public static Achievement achievementInvokeGodPower = new Achievement("achievement.invokeGodPower", "invokeGodPower", 3, -1, MoWitherItems.lightningstormpower, (Achievement)null).setSpecial().setIndependent();
-	public static Achievement achievementIrony = new Achievement("achievement.irony", "irony", 1, -2, MoWitherItems.witherSword, (Achievement)null).setIndependent();
+	public static Achievement achievementInvokeGodPower = new Achievement("achievement.invokeGodPower", "invokeGodPower", 3, -1, MoWitherItems.lightningstormpower, (Achievement)null).setSpecial().initIndependentStat();
+	public static Achievement achievementIrony = new Achievement("achievement.irony", "irony", 1, -2, MoWitherItems.witherSword, (Achievement)null).initIndependentStat();
 	public static Achievement achievementKillAirWither = new Achievement("achievement.killAirWither", "killAirWither", 0, 2, MoWitherItems.air_essence, achievementSpawnMoWither);
 	public static Achievement achievementKillFireWither = new Achievement("achievement.killFireWither", "killFireWither", 1, 3, MoWitherItems.fire_essence, achievementSpawnMoWither);
 	public static Achievement achievementKillEarthWither = new Achievement("achievement.killEarthWither", "killEarthWither", 3, 3, MoWitherItems.earth_essence, achievementSpawnMoWither);
@@ -29,7 +29,7 @@ public class MoWithersAchievments
 	public static Achievement achievementWitherFamily = new Achievement("achievement.witherFamily", "witherFamily", -1, -5, MoWitherItems.witherfamily, achievementWitherLove).setSpecial();
 	public static Achievement achievementAllstarfather = new Achievement("achievement.witherAllStarFather", "witherAllStarFather", 1, -3, MoWitherItems.allstarfather, achievementWitherFamily).setSpecial();
 	
-	public static Achievement samanthaQuestlineStart = new Achievement("achievement.samanthaqueststart", "samanthaqueststart", 0, 0, Items.writable_book, (Achievement)null).setIndependent();
+	public static Achievement samanthaQuestlineStart = new Achievement("achievement.samanthaqueststart", "samanthaqueststart", 0, 0, Items.writable_book, (Achievement)null).initIndependentStat();
 	public static Achievement samanthaQuestlinePart1 = new Achievement("achievement.samanthaquest1", "samanthaquest1", 1, 0, Items.writable_book, samanthaQuestlineStart);
 	public static Achievement samanthaQuestlinePart2 = new Achievement("achievement.samanthaquest2", "samanthaquest2", 2, 0, Items.book, samanthaQuestlinePart1);
 	public static Achievement samanthaQuestlinePart3 = new Achievement("achievement.samanthaquest3", "samanthaquest3", 3, 0, Items.book, samanthaQuestlinePart2);

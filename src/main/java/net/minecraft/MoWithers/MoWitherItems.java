@@ -2,14 +2,15 @@ package net.minecraft.MoWithers;
 
 import net.minecraft.MoWithers.items.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
+
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 public class MoWitherItems 
@@ -20,9 +21,9 @@ public class MoWitherItems
 		register();
 	}
 	
-	public static ArmorMaterial WitherArmor = EnumHelper.addArmorMaterial("WitherArmor", "mowithers:wither", 660, new int[] {5, 9, 7, 3}, 25);
+	public static ArmorMaterial WitherArmor = EnumHelper.addArmorMaterial("WitherArmor", "mowithers:wither", 660, new int[] {5, 9, 7, 3}, 25, SoundEvents.item_armor_equip_generic);
 	public static ToolMaterial WitherTools = EnumHelper.addToolMaterial("WitherTools", 4, 26470, 32.0F, 76.0F, 25).setRepairItem(new ItemStack(Items.skull, 1, 1));
-	public static ArmorMaterial EmeraldArmor = EnumHelper.addArmorMaterial("EmeraldArmor", "mowithers:emerald", 66, new int[] {3, 8, 6, 3}, 14);
+	public static ArmorMaterial EmeraldArmor = EnumHelper.addArmorMaterial("EmeraldArmor", "mowithers:emerald", 66, new int[] {3, 8, 6, 3}, 14, SoundEvents.item_armor_equip_generic);
 	public static ToolMaterial EmeraldTools = EnumHelper.addToolMaterial("EmeraldTools", 3, 2647, 12.0F, 4.0F, 14).setRepairItem(new ItemStack(Items.emerald));
 	
 	public static Item sculpture;
